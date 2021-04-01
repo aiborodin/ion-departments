@@ -1,8 +1,14 @@
 <ion-header> <!--[translucent]="true"-->
   <ion-toolbar>
     <ion-title>
-      Company departments
+      Company X
     </ion-title>
+    <ion-buttons slot="end">
+      ({{userName}})
+      <ion-button routerLink="/login" routerDirection="root">
+        <ion-icon slot="icon-only" name="log-out"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 

@@ -8,6 +8,7 @@ import {DataGetterService, Department} from "../service/data-getter.service";
 })
 export class HomePage {
 
+  userName;
   departments: Department[];
   showNew: boolean = false;
   showEdit: number = -1;
@@ -16,6 +17,7 @@ export class HomePage {
     dataService.getDepartments().subscribe(
       departments => this.departments = departments
     );
+    this.userName = dataService.getUser();
   }
 
   delete(idx: number) {

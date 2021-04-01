@@ -41,6 +41,10 @@ export class DataGetterService {
     },
   ];
 
+  private userName = '';
+
+  private users = ['Vasil', 'Petro', 'Olena'];
+
   constructor() { }
 
   getDepartments(): Observable<any[]> {
@@ -51,5 +55,17 @@ export class DataGetterService {
   }
   deleteDepartment(index: number): void {
     this.departments.splice(index, 1);
+  }
+
+  getUser(): string {
+    return this.userName;
+  }
+
+  setUser(name: string) {
+    this.userName = name;
+  }
+
+  userExists(name: string): boolean {
+    return this.users.indexOf(name) !== -1;
   }
 }

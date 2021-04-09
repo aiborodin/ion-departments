@@ -17,6 +17,15 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
+  {
+    path: 'employees/:depId',
+    loadChildren: () => import('./employees/employees.module').then( m => m.EmployeesPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'data-sender',
+    loadChildren: () => import('./data-sender/data-sender.module').then( m => m.DataSenderPageModule)
+  },
 ];
 
 @NgModule({

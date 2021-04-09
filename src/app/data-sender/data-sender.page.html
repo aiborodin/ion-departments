@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Data Returning</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-label position="floating">Data to home</ion-label>
+    <ion-input type="text" [(ngModel)]="textData"></ion-input>
+  </ion-item>
+  <ion-button color="primary" class="ion-float-right" (click)="returnDataToHome()">
+    <ion-icon slot="start" name="sync"></ion-icon> Return data
+  </ion-button>
+</ion-content>

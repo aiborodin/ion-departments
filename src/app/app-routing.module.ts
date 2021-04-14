@@ -5,7 +5,7 @@ import {AuthGuard} from "./guards/auth.guard";
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'http-test',
     pathMatch: 'full'
   },
   {
@@ -25,6 +25,10 @@ const routes: Routes = [
   {
     path: 'data-sender',
     loadChildren: () => import('./data-sender/data-sender.module').then( m => m.DataSenderPageModule)
+  },
+  {
+    path: 'http-test',
+    loadChildren: () => import('./http-test/http-test.module').then( m => m.HttpTestPageModule)
   },
 ];
 

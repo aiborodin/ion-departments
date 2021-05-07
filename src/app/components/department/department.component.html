@@ -5,10 +5,6 @@
 
   <ion-card-content>
     <ion-item>
-      <ion-label position="floating">Id</ion-label>
-      <ion-input type="number" [(ngModel)]="department.id" name="id"></ion-input>
-    </ion-item>
-    <ion-item>
       <ion-label position="floating">Name</ion-label>
       <ion-input type="text" [(ngModel)]="department.name" name="name"></ion-input>
     </ion-item>
@@ -17,14 +13,17 @@
       <ion-input type="text" [(ngModel)]="department.type" name="type"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Employees</ion-label>
-      <ion-input type="number" [(ngModel)]="department.employeesQuantity" name="employeesQuantity"></ion-input>
+      <ion-label position="floating">Employees Quantity</ion-label>
+      <ion-input type="number" [ngModel]="employeesQuantity" name="employeesQuantity"></ion-input>
     </ion-item>
-    <ion-button *ngIf="isNew" color="primary" (click)="addNew()">
+    <ion-button *ngIf="isNew" class="ion-color-primary" (click)="addNew()">
       <ion-icon slot="start" name="add-circle"></ion-icon> Add
     </ion-button>
-    <ion-button *ngIf="isNew" color="danger" class="ion-float-right" (click)="cancelAdding()">
+    <ion-button *ngIf="isNew" class="ion-color-danger ion-float-right" (click)="cancelAdding()">
       <ion-icon slot="start" name="close"></ion-icon> Cancel
+    </ion-button>
+    <ion-button *ngIf="!isNew" class="ion-color-primary" (click)="saveDepartment()">
+      <ion-icon slot="start" name="save"></ion-icon> Save
     </ion-button>
   </ion-card-content>
 </ion-card>

@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Department} from "../../service/data-getter.service";
+import {DataService, Department} from "../../service/data.service";
 
 @Component({
   selector: 'app-department',
@@ -13,8 +13,9 @@ export class DepartmentComponent implements OnInit {
   @Output() addDep = new EventEmitter();
   @Output() cancelAddingDep = new EventEmitter();
   title: string;
+  employeesQuantity: number = 0;
 
-  constructor() { }
+  constructor(private dataService: DataService) { }
 
   ngOnInit() {
     if (this.isNew) {
@@ -22,10 +23,10 @@ export class DepartmentComponent implements OnInit {
         id: null,
         name: '',
         type: '',
-        employeesQuantity: null
       };
       this.title = 'New department';
     }
+    this.employeesQuantity = this.dataService.getEmployeesQuantity(this.department.id);
   }
 
   addNew() {
@@ -33,10 +34,12 @@ export class DepartmentComponent implements OnInit {
       this.addDep.emit(this.department);
     }
   }
-
   cancelAdding() {
     if (this.isNew) {
       this.cancelAddingDep.emit();
     }
+  }
+  saveDepartment() {
+    this.dataService.updateDepartment(this.department).subscribe(response => console.log(response));
   }
 }

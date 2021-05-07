@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { HomePage } from './home.page';
 
 import { HomePageRoutingModule } from './home-routing.module';
-import {DepartmentComponent} from "../components/department/department.component";
+import {DepartmentComponent} from "../../components/department/department.component";
 
 
 @NgModule({

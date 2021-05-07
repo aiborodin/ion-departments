@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {DataGetterService} from "../service/data-getter.service";
+import {DataService} from "../../service/data.service";
 import {NavController} from "@ionic/angular";
 import {ActivatedRoute, Router} from "@angular/router";
 

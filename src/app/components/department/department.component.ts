@@ -26,7 +26,7 @@ export class DepartmentComponent implements OnInit {
       };
       this.title = 'New department';
     }
-    this.employeesQuantity = this.dataService.getEmployeesQuantity(this.department.id);
+    this.dataService.getEmployeesQuantity(this.department.id).subscribe(quantity => this.employeesQuantity = +quantity)
   }
 
   addNew() {

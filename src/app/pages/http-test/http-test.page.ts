@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {map} from "rxjs/operators";
+import {filter, map} from "rxjs/operators";
+import {BehaviorSubject, Observable} from "rxjs";
 
 @Component({
   selector: 'app-http-test',
@@ -14,7 +15,20 @@ export class HttpTestPage implements OnInit {
   private postCount = 0;
   private postStep = 10;
 
-  constructor(private http: HttpClient) { }
+  testSubject = new BehaviorSubject(null);
+
+  constructor(private http: HttpClient) {
+    let testObs = this.testSubject.pipe(filter(val => val));
+    this.methodWithPipe(testObs).subscribe(console.log);
+    testObs.subscribe(val => console.log('Sub 1 -> ' + val));
+    testObs.subscribe(val => console.log('Sub 2 -> ' + val));
+    this.testSubject.next(3);
+    testObs.subscribe(val => console.log('Sub 3 -> ' + val));
+  }
+
+  methodWithPipe(testObs: Observable<any>): Observable<any> {
+    return testObs.pipe(map(value => value*value));
+  }
 
   ngOnInit() {
     this.refreshData(false);

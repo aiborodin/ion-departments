@@ -3,7 +3,7 @@ import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Route
 import { Observable } from 'rxjs';
 import {AlertController} from "@ionic/angular";
 import {AuthService, Role} from "../service/auth.service";
-import {map} from "rxjs/operators";
+import {map, take} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -18,21 +18,18 @@ export class AuthGuard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): any {
-
     return this.authService.user.pipe(
+      take(1),
       map(user => {
-        console.log("In guard", user);
-        const loggedIn = user !== null;
-        if (!loggedIn) {
-          return this.router.navigateByUrl('/login');
+        if (user && user.role && user.username) {
+          const expectedRole: Role = route.data.role;
+          if (expectedRole && user.role !== expectedRole) {
+            this.showAuthError();
+            return this.router.navigateByUrl('/home');
+          }
+          return true;
         }
-        const expectedRole: Role = route.data.role;
-
-        if (expectedRole !== undefined && user.role !== expectedRole) {
-          this.showAuthError();
-          return this.router.navigateByUrl('/home');
-        }
-        return true;
+        return this.router.navigateByUrl('/login');
       })
     )
   }

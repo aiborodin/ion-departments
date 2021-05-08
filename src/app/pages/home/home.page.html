@@ -4,8 +4,8 @@
       Company X
     </ion-title>
     <ion-buttons slot="end">
-      ({{userName}})
-      <ion-button routerLink="/login" routerDirection="root">
+      ({{user.username}})
+      <ion-button (click)="logOut()">
         <ion-icon slot="icon-only" name="log-out"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -16,7 +16,8 @@
   <ion-list>
     <ion-list-header>
       <ion-label>Departments</ion-label>
-      <ion-button shape="round" fill="outline"
+      <ion-button *ngIf="user.role !== Role.VIEWER"
+                  shape="round" fill="outline"
                   color="success" (click)="showNew=true">
         <ion-icon slot="start" name="add"></ion-icon>Add
       </ion-button>
@@ -28,8 +29,8 @@
     </app-department>
 
     <div *ngFor="let department of departments; let i = index">
-      <ion-item-sliding >
-        <ion-item-options side="start">
+      <ion-item-sliding>
+        <ion-item-options side="start" *ngIf="user.role !== Role.VIEWER">
           <ion-item-option color="primary" (click)="showEdit=i">
             <ion-icon name="create"></ion-icon>
             Change

@@ -1,9 +1,14 @@
-<ion-header>
+<ion-header> <!--[translucent]="true"-->
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+    <ion-title>
+      Admin Dashboard
+    </ion-title>
+    <ion-buttons slot="end">
+      ({{user.username}})
+      <ion-button (click)="logOut()">
+        <ion-icon slot="icon-only" name="log-out"></ion-icon>
+      </ion-button>
     </ion-buttons>
-    <ion-title>{{depName}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -18,41 +23,40 @@
   </ion-refresher>
   <ion-list>
     <ion-list-header>
-      <ion-button *ngIf="user.role !== Role.VIEWER"
-                  shape="round" fill="outline"
+      <ion-button shape="round" fill="outline"
                   color="success" (click)="showNew=true">
         <ion-icon slot="start" name="add"></ion-icon>Add
       </ion-button>
     </ion-list-header>
 
-    <app-employee *ngIf="showNew" [isNew]="true"
-                    (addEmployee)="addEmployee($event)"
-                    (cancelAdding)="showNew=false">
-    </app-employee>
+    <app-user *ngIf="showNew" [isNew]="true"
+                  (addUser)="addUser($event)"
+                  (cancelAdding)="showNew=false">
+    </app-user>
 
-    <div *ngFor="let employee of employees; let i = index">
+    <div *ngFor="let user of users; let i = index">
       <ion-item-sliding class="ion-text-wrap">
-        <ion-item-options *ngIf="user.role !== Role.VIEWER" side="start">
+        <ion-item-options side="start">
           <ion-item-option color="primary" (click)="showEdit=i">
             <ion-icon name="create"></ion-icon>
             Change
           </ion-item-option>
-          <ion-item-option color="danger" (click)="deleteEmployee(employee.id)">
+          <ion-item-option color="danger" (click)="deleteUser(user.id)">
             <ion-icon name="trash"></ion-icon>
             Delete
           </ion-item-option>
         </ion-item-options>
         <ion-item (click)="showEdit=-1">
-          <ion-icon [name]="employee.gender == 'f' ? 'woman' : 'man'" slot="start"></ion-icon>
-          <ion-label class="ion-text-wrap">{{employee.name}}</ion-label>
-          <ion-note slot="end">{{employee.age}}</ion-note>
+          <ion-icon name="person-outline" slot="start"></ion-icon>
+          <ion-label class="ion-text-wrap">{{user.username}}</ion-label>
+          <ion-note slot="end">{{user.role}}</ion-note>
         </ion-item>
       </ion-item-sliding>
-      <app-employee *ngIf="showEdit==i"
+      <app-user *ngIf="showEdit==i"
                     [isNew]="false"
-                    [employee]="employee"
-                    (saveEvent)="showEdit=-1">
-      </app-employee>
+                    [user]="user"
+                    (saveUser)="showEdit=-1">
+      </app-user>
     </div>
   </ion-list>
 
@@ -63,4 +67,3 @@
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>
-

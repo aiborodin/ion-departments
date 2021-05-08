@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {DataService, Department} from "../../service/data.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {AuthService} from "../../service/auth.service";
+import {AuthService, User, Role} from "../../service/auth.service";
 
 @Component({
   selector: 'app-home',
@@ -10,11 +10,12 @@ import {AuthService} from "../../service/auth.service";
 })
 export class HomePage implements OnInit {
 
-  userName;
   departments: Department[];
   showNew: boolean = false;
   showEdit: number = -1;
   extraData: string;
+  user: User;
+  Role = Role
 
   constructor(
     private dataService: DataService,
@@ -23,7 +24,7 @@ export class HomePage implements OnInit {
     private route: ActivatedRoute
   ) {
     route.params.subscribe(params => this.extraData = params.data);
-    this.authService.user.subscribe(user => this.userName = user.username);
+    this.authService.user.subscribe(user => this.user = user);
   }
   ngOnInit() {
     this.dataService.getDepartments().subscribe(
@@ -50,5 +51,8 @@ export class HomePage implements OnInit {
   }
   transferToDataSender() {
     this.router.navigate(['data-sender', {data: this.extraData}]);
+  }
+  logOut() {
+    this.authService.signOut();
   }
 }

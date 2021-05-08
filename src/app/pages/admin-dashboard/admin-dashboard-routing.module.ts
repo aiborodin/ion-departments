@@ -6,7 +6,36 @@ import { AdminDashboardPage } from './admin-dashboard.page';
 const routes: Routes = [
   {
     path: '',
-    component: AdminDashboardPage
+    component: AdminDashboardPage,
+    children: [
+      {
+        path: 'users',
+        children: [
+          {
+            path: '',
+            loadChildren: '../users/users.module#UsersPageModule'
+          }
+        ]
+      },
+      {
+        path: 'departments',
+        children: [
+          {
+            path: '',
+            loadChildren: '../home/home.module#HomePageModule'
+          }
+        ]
+      },
+      {
+        path: 'posts',
+        children: [
+          {
+            path: '',
+            loadChildren: '../http-test/http-test.module#HttpTestPageModule'
+          }
+        ]
+      }
+    ]
   }
 ];
 

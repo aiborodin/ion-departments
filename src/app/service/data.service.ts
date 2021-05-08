@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Observable, of, pipe, Subject} from "rxjs";
 import {HttpClient, HttpResponse} from "@angular/common/http";
-import {AuthService} from "./auth.service";
+import {AuthService, User} from "./auth.service";
 
 export interface Department {
   id: number;
@@ -22,7 +22,8 @@ export interface Employee {
 })
 export class DataService {
 
-  public readonly baseVersioned = 'http://ionic-api.loc/v1/';
+  public readonly baseUrl = 'http://ionic-api.loc/';
+  public readonly baseVersioned = this.baseUrl + 'v1/';
 
   private access_token: string;
 
@@ -30,10 +31,7 @@ export class DataService {
     private http: HttpClient,
     private authService: AuthService
   ) {
-    authService.user.subscribe(user => {
-      this.access_token = user.access_token;
-      console.log("In Data Service", user);
-    });
+    authService.user.subscribe(user => this.access_token = user.access_token);
   }
   getDepartments(): Observable<Department[]> {
     return this.http.get<Department[]>(`${this.baseVersioned}departments?access-token=${this.access_token}`);
@@ -54,11 +52,8 @@ export class DataService {
     return this.http.get<Employee[]>(`${this.baseVersioned}employees?filter[department_id]=${depId}&access-token=${this.access_token}&page=${page}`,
       { observe: 'response' });
   }
-  getEmployeesQuantity(depId: number): number {
-    let quantity = 0;
-    this.http.get<number>(`${this.baseVersioned}employee/count?dep_id=${depId}&access-token=${this.access_token}`)
-      .subscribe(response => quantity = +response);
-    return quantity;
+  getEmployeesQuantity(depId: number): Observable<number> {
+    return this.http.get<number>(`${this.baseVersioned}employee/count?dep_id=${depId}&access-token=${this.access_token}`);
   }
   addEmployee(employee: Employee): Observable<Employee> {
     return this.http.post<Employee>(`${this.baseVersioned}employees?access-token=${this.access_token}`, employee);
@@ -68,5 +63,21 @@ export class DataService {
   }
   deleteEmployee(id: number): Observable<Employee> {
     return this.http.delete<Employee>(this.baseVersioned + 'employees/' + id + '?access-token=' + this.access_token);
+  }
+  getUsers(page: number = 1): Observable<User[]> {
+    return this.http.get<User[]>(`${this.baseVersioned}users?access-token=${this.access_token}&page=${page}`);
+  }
+  getUsersResponse(depId: number, page: number = 1): Observable<HttpResponse<User[]>> {
+    return this.http.get<User[]>(`${this.baseVersioned}users?access-token=${this.access_token}&page=${page}`,
+      { observe: 'response' });
+  }
+  addUser(user: User): Observable<User> {
+    return this.http.post<User>(`${this.baseUrl}signup`, user);
+  }
+  updateUser(user: User): Observable<User> {
+    return this.http.put<User>(this.baseVersioned + 'users/' + user.id + '?access-token=' + this.access_token, user);
+  }
+  deleteUser(id: number): Observable<User> {
+    return this.http.delete<User>(this.baseVersioned + 'users/' + id + '?access-token=' + this.access_token);
   }
 }

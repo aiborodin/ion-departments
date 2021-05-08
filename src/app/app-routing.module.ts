@@ -39,6 +39,10 @@ const routes: Routes = [
   {
     path: 'http-test',
     loadChildren: () => import('./pages/http-test/http-test.module').then(m => m.HttpTestPageModule)
+  },
+  {
+    path: 'users',
+    loadChildren: () => import('./pages/users/users.module').then(m => m.UsersPageModule)
   }
 ];
 

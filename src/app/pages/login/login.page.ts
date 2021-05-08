@@ -22,18 +22,13 @@ export class LoginPage implements OnInit {
   }
 
   login() {
-    console.log({
-      username: this.username,
-      password: this.password
-    });
     this.authService.login({
       username: this.username,
       password: this.password
     }).subscribe(user => {
-      console.log(user);
-      console.log('Here')
+      this.authService.setUser(user);
       if (user.role === Role.ADMIN) {
-        this.router.navigate(['/admin-dashboard']);
+        this.router.navigate(['/admin-dashboard/users']);
       } else {
         this.router.navigate(['/home']);
       }

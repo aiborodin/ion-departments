@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {DataService, Department, Employee} from "../../service/data.service";
+import {DataService, Employee} from "../../service/data.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {NavController} from "@ionic/angular";
-import {Subject} from "rxjs";
+import {User, Role, AuthService} from "../../service/auth.service";
 
 @Component({
   selector: 'app-employees',
@@ -18,16 +17,19 @@ export class EmployeesPage implements OnInit {
   totalPages: number;
   showNew: boolean = false;
   showEdit: number = -1;
+  user: User;
+  Role = Role;
 
   constructor(
+    private authService: AuthService,
     private dataService: DataService,
-    private router: Router,
     private route: ActivatedRoute
   ) {
     this.route.params.subscribe(parameters => {
       this.depId = parameters.depId;
       this.depName = parameters.depName;
     });
+    this.authService.user.subscribe(user => this.user = user);
   }
   ngOnInit() {
     this.refreshData();

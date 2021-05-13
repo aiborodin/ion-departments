@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {DataService, Department, Employee} from "../../service/data.service";
+import {DataService, Department, Employee} from "../../services/data.service";
 import {AlertController} from "@ionic/angular";
 import {ActivatedRoute} from "@angular/router";
 

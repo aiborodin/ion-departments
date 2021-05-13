@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router} from '@angular/router';
 import { Observable } from 'rxjs';
 import {AlertController} from "@ionic/angular";
-import {AuthService, Role} from "../service/auth.service";
+import {AuthService, Role} from "../services/auth.service";
 import {map, take} from "rxjs/operators";
 
 @Injectable({

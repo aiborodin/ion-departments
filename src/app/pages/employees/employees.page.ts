@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {DataService, Employee} from "../../service/data.service";
+import {DataService, Employee} from "../../services/data.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {User, Role, AuthService} from "../../service/auth.service";
+import {User, Role, AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-employees',

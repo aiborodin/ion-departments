@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {DataService, Department} from "../../service/data.service";
+import {DataService, Department} from "../../services/data.service";
 
 @Component({
   selector: 'app-department',

@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {DataService, Department} from "../../service/data.service";
+import {DataService, Department} from "../../services/data.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {AuthService, User, Role} from "../../service/auth.service";
+import {AuthService, User, Role} from "../../services/auth.service";
+import {FireDataService} from "../../services/fire-data.service";
 
 @Component({
   selector: 'app-home',
@@ -19,6 +20,7 @@ export class HomePage implements OnInit {
 
   constructor(
     private dataService: DataService,
+    private fireDataService: FireDataService,
     private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute
@@ -27,9 +29,7 @@ export class HomePage implements OnInit {
     this.authService.user.subscribe(user => this.user = user);
   }
   ngOnInit() {
-    this.dataService.getDepartments().subscribe(
-      departments => this.departments = departments
-    );
+    this.fireDataService.departments.subscribe(departments => this.departments = departments);
   }
   delete(id: number) {
     this.dataService.deleteDepartment(id).subscribe(

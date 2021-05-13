@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {AlertController} from "@ionic/angular";
-import {AuthService, Role} from "../../service/auth.service";
+import {AuthService, Role, User} from "../../services/auth.service";
 
 @Component({
   selector: 'app-login',
@@ -15,10 +15,19 @@ export class LoginPage implements OnInit {
   constructor(
     private router: Router,
     private authService: AuthService,
-    public alertController: AlertController
+    public alertController: AlertController,
   ) { }
 
   ngOnInit() {
+    // Fake data to test Firestore
+    this.authService.setUser(new class implements User {
+      access_token: string;
+      email: string;
+      id: number;
+      role: Role;
+      username: 'Fake User';
+    })
+    this.router.navigateByUrl('/home');
   }
 
   login() {

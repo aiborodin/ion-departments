@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {DataService} from "../../service/data.service";
+import {DataService} from "../../services/data.service";
 import {AlertController} from "@ionic/angular";
-import {User} from "../../service/auth.service";
+import {User} from "../../services/auth.service";
 
 @Component({
   selector: 'app-user',

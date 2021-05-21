@@ -24,8 +24,8 @@
     </ion-list-header>
 
     <app-department *ngIf="showNew" [isNew]="true"
-                    (addDep)="addDepartment($event)"
-                    (cancelAddingDep)="showNew=false">
+                    (onAdd)="addDepartment($event)"
+                    (onCancel)="showNew=false">
     </app-department>
 
     <div *ngFor="let department of departments; let i = index">
@@ -35,7 +35,7 @@
             <ion-icon name="create"></ion-icon>
             Change
           </ion-item-option>
-          <ion-item-option color="danger" (click)="delete(department.id)">
+          <ion-item-option color="danger" (click)="delete(department)">
             <ion-icon name="trash"></ion-icon>
             Delete
           </ion-item-option>
@@ -55,7 +55,8 @@
         </ion-item-options>
       </ion-item-sliding>
       <app-department *ngIf="showEdit==i" [isNew]="false"
-                      [department]="department">
+                      [department]="department"
+                      (onSave)="showEdit=-1">
       </app-department>
     </div>
   </ion-list>

@@ -16,10 +16,10 @@
       <ion-label position="floating">Employees Quantity</ion-label>
       <ion-input type="number" [ngModel]="employeesQuantity" name="employeesQuantity" readonly="true"></ion-input>
     </ion-item>
-    <ion-button *ngIf="isNew" class="ion-color-primary" (click)="addNew()">
+    <ion-button *ngIf="isNew" class="ion-color-primary" (click)="this.onAdd.emit(this.department)">
       <ion-icon slot="start" name="add-circle"></ion-icon> Add
     </ion-button>
-    <ion-button *ngIf="isNew" class="ion-color-danger ion-float-right" (click)="cancelAdding()">
+    <ion-button *ngIf="isNew" class="ion-color-danger ion-float-right" (click)="this.onCancel.emit()">
       <ion-icon slot="start" name="close"></ion-icon> Cancel
     </ion-button>
     <ion-button *ngIf="!isNew" class="ion-color-primary" (click)="saveDepartment()">

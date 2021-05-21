@@ -25,7 +25,7 @@ export class LoginPage implements OnInit {
       email: string;
       id: number;
       role: Role;
-      username: 'Fake User';
+      username: string = 'Fake User';
     })
     this.router.navigateByUrl('/home');
   }

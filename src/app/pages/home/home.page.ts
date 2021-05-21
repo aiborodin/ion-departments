@@ -25,28 +25,28 @@ export class HomePage implements OnInit {
     private router: Router,
     private route: ActivatedRoute
   ) {
-    route.params.subscribe(params => this.extraData = params.data);
-    this.authService.user.subscribe(user => this.user = user);
   }
   ngOnInit() {
+    this.route.params.subscribe(params => this.extraData = params.data);
+    this.authService.user.subscribe(user => this.user = user);
     this.fireDataService.departments.subscribe(departments => this.departments = departments);
   }
-  delete(id: number) {
-    this.dataService.deleteDepartment(id).subscribe(
-      response => {
-        console.log('Deleted department with id: ' + id);
-        this.dataService.getDepartments().subscribe(departments => this.departments = departments);
-      }
-    );
+  delete(department: Department) {
+    this.fireDataService.deleteDepartment(department.id);
+    // this.dataService.deleteDepartment(id).subscribe(
+    //   response => {
+    //     console.log('Deleted department with id: ' + id);
+    //     this.dataService.getDepartments().subscribe(departments => this.departments = departments);
+    //   }
+    // );
   }
   addDepartment(department: Department) {
-    this.dataService.addDepartment(department).subscribe(
-      department => {
-        console.log('Added department');
-        console.log(department);
-        this.dataService.getDepartments().subscribe(departments => this.departments = departments);
-      }
-    );
+    this.fireDataService.addDepartment(department);
+    // this.dataService.addDepartment(department).subscribe(department => {
+    //     console.log('Added department', department);
+    //     this.dataService.getDepartments().subscribe(departments => this.departments = departments);
+    //   }
+    // );
     this.showNew = false;
   }
   transferToDataSender() {

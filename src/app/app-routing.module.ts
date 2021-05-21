@@ -21,7 +21,7 @@ const routes: Routes = [
   {
     path: 'employees/:depId',
     loadChildren: () => import('./pages/employees/employees.module').then(m => m.EmployeesPageModule),
-    canActivate: [AuthGuard]
+    canActivate: [/*AuthGuard*/]
   },
   {
     path: 'admin-dashboard',

@@ -4,7 +4,7 @@ import {HttpClient, HttpResponse} from "@angular/common/http";
 import {AuthService, User} from "./auth.service";
 
 export interface Department {
-  id: number;
+  id: string;
   name: string;
   type: string;
 }

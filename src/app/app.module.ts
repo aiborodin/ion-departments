@@ -12,6 +12,7 @@ import { IonicStorageModule } from '@ionic/storage-angular';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import {AngularFireAuth} from "@angular/fire/auth";
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,7 +25,7 @@ import { AppRoutingModule } from './app-routing.module';
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    AngularFirestore
+    AngularFirestore, AngularFireAuth
   ],
   bootstrap: [AppComponent],
 })

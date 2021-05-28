@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {AlertController} from "@ionic/angular";
 import {AuthService, Role, User} from "../../services/auth.service";
+import {FireDataService} from "../../services/fire-data.service";
 
 @Component({
   selector: 'app-login',
@@ -15,35 +16,35 @@ export class LoginPage implements OnInit {
   constructor(
     private router: Router,
     private authService: AuthService,
+    private fireDataService: FireDataService,
     public alertController: AlertController,
   ) { }
 
   ngOnInit() {
-    // Fake data to test Firestore
-    this.authService.setUser(new class implements User {
-      access_token: string;
-      email: string;
-      id: number;
-      role: Role;
-      username: string = 'Fake User';
-    })
-    this.router.navigateByUrl('/home');
   }
 
   login() {
-    this.authService.login({
+    this.fireDataService.logIn({
       username: this.username,
       password: this.password
-    }).subscribe(user => {
-      this.authService.setUser(user);
-      if (user.role === Role.ADMIN) {
-        this.router.navigate(['/admin-dashboard/users']);
-      } else {
-        this.router.navigate(['/home']);
-      }
-    }, error => {
-      this.showError(error.error.message);
-    })
+    }).then(
+      res => {
+        this.router.navigateByUrl('/home');
+      },
+      err => this.showError(err.message))
+    // this.authService.login({
+    //   username: this.username,
+    //   password: this.password
+    // }).subscribe(user => {
+    //   this.authService.setUser(user);
+    //   if (user.role === Role.ADMIN) {
+    //     this.router.navigate(['/admin-dashboard/users']);
+    //   } else {
+    //     this.router.navigate(['/home']);
+    //   }
+    // }, error => {
+    //   this.showError(error.error.message);
+    // })
   }
 
   async showError(message: string) {

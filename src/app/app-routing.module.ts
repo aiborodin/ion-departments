@@ -16,12 +16,12 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule),
-    canActivate: [/*AuthGuard*/]
+    canActivate: [AuthGuard]
   },
   {
     path: 'employees/:depId',
     loadChildren: () => import('./pages/employees/employees.module').then(m => m.EmployeesPageModule),
-    canActivate: [/*AuthGuard*/]
+    canActivate: [AuthGuard]
   },
   {
     path: 'admin-dashboard',

@@ -1,8 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {DataService, Department} from "../../services/data.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {AuthService, User, Role} from "../../services/auth.service";
+import {AuthService, Role} from "../../services/auth.service";
 import {FireDataService} from "../../services/fire-data.service";
+import firebase from "firebase";
+import User = firebase.User;
 
 @Component({
   selector: 'app-home',
@@ -16,6 +18,7 @@ export class HomePage implements OnInit {
   showEdit: number = -1;
   extraData: string;
   user: User;
+  username: string;
   Role = Role
 
   constructor(
@@ -28,8 +31,11 @@ export class HomePage implements OnInit {
   }
   ngOnInit() {
     this.route.params.subscribe(params => this.extraData = params.data);
-    this.authService.user.subscribe(user => this.user = user);
-    this.fireDataService.departments.subscribe(departments => this.departments = departments);
+    this.fireDataService.getUser().subscribe(user => {
+      this.user = user;
+      this.username = user.providerData[0].email;
+    });
+    this.fireDataService.getDepartments().subscribe(departments => this.departments = departments);
   }
   delete(department: Department) {
     this.fireDataService.deleteDepartment(department.id);

@@ -3,18 +3,29 @@ import {Observable} from "rxjs";
 import {Department, Employee} from "./data.service";
 import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/firestore";
 import {map} from "rxjs/operators";
+import {AngularFireAuth} from "@angular/fire/auth";
+import firebase from "firebase";
+import User = firebase.User;
 
 @Injectable({
   providedIn: 'root'
 })
 export class FireDataService {
 
-  private departmentsCollection: AngularFirestoreCollection<Department>;
-  departments: Observable<any[]>;
+  constructor(private afs: AngularFirestore, private afAuth: AngularFireAuth) {
+    // this.afAuth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
+  }
 
-  constructor(private afs: AngularFirestore) {
-    this.departmentsCollection = afs.collection<Department>('departments');
-    this.departments = this.departmentsCollection.snapshotChanges().pipe(
+  logIn(user) {
+    return this.afAuth.signInWithEmailAndPassword(user.username, user.password);
+  }
+
+  getUser(): Observable<User> {
+    return this.afAuth.authState;
+  }
+
+  getDepartments() {
+    return this.afs.collection<Department>('departments').snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Department;
         const id = a.payload.doc.id;
